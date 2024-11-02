@@ -1,0 +1,178 @@
+<!-- laybuy_options.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lay-Buy Payment Options - A N B Tech Supplies</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        .phone-model, .payment-options {
+            margin-bottom: 15px;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .payment-summary {
+            margin-top: 20px;
+        }
+
+        .payment-plan {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fafafa;
+        }
+
+        .button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <script>
+        // Price list in ZAR
+        const phonePrices = {
+            "iPhone 11": 9000,
+            "iPhone 11 Pro": 12000,
+            "iPhone 11 Pro Max": 13000,
+            "iPhone 12": 14000,
+            "iPhone 12 Pro": 16000,
+            "iPhone 12 Pro Max": 18000,
+            "iPhone 13": 15000,
+            "iPhone 13 Pro": 17000,
+            "iPhone 13 Pro Max": 19000,
+            "iPhone 14": 20000,
+            "iPhone 14 Pro": 22000,
+            "iPhone 14 Pro Max": 24000,
+            "iPhone 15": 21000,
+            "iPhone 15 Pro": 23000,
+            "iPhone 15 Pro Max": 25000,
+            "iPhone 16": 26000,
+            "iPhone 16 Pro": 28000,
+            "iPhone 16 Pro Max": 30000
+        };
+
+        function updatePaymentPlan() {
+            const modelSelect = document.getElementById("iphone_model");
+            const planSelect = document.getElementById("payment_plan");
+            const model = modelSelect.value;
+            const plan = planSelect.value;
+            
+            if (model && plan) {
+                const price = phonePrices[model];
+                const deposit = price * 0.1;
+                let monthlyPayment;
+                
+                if (plan === "3 months") {
+                    monthlyPayment = (price - deposit) / 3;
+                } else if (plan === "6 months") {
+                    monthlyPayment = (price - deposit) / 6;
+                } else if (plan === "12 months") {
+                    monthlyPayment = (price - deposit) / 12;
+                }
+
+                document.getElementById("depositAmount").innerText = `R ${deposit.toFixed(2)}`;
+                document.getElementById("monthlyPayment").innerText = `R ${monthlyPayment.toFixed(2)} per month`;
+            } else {
+                document.getElementById("depositAmount").innerText = "N/A";
+                document.getElementById("monthlyPayment").innerText = "N/A";
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Lay-Buy Payment Options</h1>
+        <form action="/submit_laybuy" method="POST">
+            <div class="phone-model">
+                <label for="iphone_model">Select iPhone Model:</label>
+                <select name="iphone_model" id="iphone_model" required onchange="updatePaymentPlan()">
+                    <option value="">-- Select Model --</option>
+                    <option value="iPhone 11">iPhone 11 - R 9,000</option>
+                    <option value="iPhone 11 Pro">iPhone 11 Pro - R 12,000</option>
+                    <option value="iPhone 11 Pro Max">iPhone 11 Pro Max - R 13,000</option>
+                    <option value="iPhone 12">iPhone 12 - R 14,000</option>
+                    <option value="iPhone 12 Pro">iPhone 12 Pro - R 16,000</option>
+                    <option value="iPhone 12 Pro Max">iPhone 12 Pro Max - R 18,000</option>
+                    <option value="iPhone 13">iPhone 13 - R 15,000</option>
+                    <option value="iPhone 13 Pro">iPhone 13 Pro - R 17,000</option>
+                    <option value="iPhone 13 Pro Max">iPhone 13 Pro Max - R 19,000</option>
+                    <option value="iPhone 14">iPhone 14 - R 20,000</option>
+                    <option value="iPhone 14 Pro">iPhone 14 Pro - R 22,000</option>
+                    <option value="iPhone 14 Pro Max">iPhone 14 Pro Max - R 24,000</option>
+                    <option value="iPhone 15">iPhone 15 - R 21,000</option>
+                    <option value="iPhone 15 Pro">iPhone 15 Pro - R 23,000</option>
+                    <option value="iPhone 15 Pro Max">iPhone 15 Pro Max - R 25,000</option>
+                    <option value="iPhone 16">iPhone 16 - R 26,000</option>
+                    <option value="iPhone 16 Pro">iPhone 16 Pro - R 28,000</option>
+                    <option value="iPhone 16 Pro Max">iPhone 16 Pro Max - R 30,000</option>
+                </select>
+            </div>
+            <div class="payment-options">
+                <label for="payment_plan">Select Lay-Buy Payment Plan:</label>
+                <select name="payment_plan" id="payment_plan" required onchange="updatePaymentPlan()">
+                    <option value="">-- Choose Payment Plan --</option>
+                    <option value="3 months">3 Months Plan - 10% deposit + 3 monthly payments</option>
+                    <option value="6 months">6 Months Plan - 10% deposit + 6 monthly payments</option>
+                    <option value="12 months">12 Months Plan - 10% deposit + 12 monthly payments</option>
+                </select>
+            </div>
+
+            <div class="payment-summary">
+                <div class="payment-plan">
+                    <label>Deposit:</label>
+                    <span id="depositAmount">N/A</span>
+                </div>
+                <div class="payment-plan">
+                    <label>Monthly Payment:</label>
+                    <span id="monthlyPayment">N/A</span>
+                </div>
+            </div>
+
+            <button type="submit" class="button">Confirm Lay-Buy Option</button>
+        </form>
+    </div>
+</body>
+</html>
